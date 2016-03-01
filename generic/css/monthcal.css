@@ -1,0 +1,808 @@
+/*
+-----------------------------------------------
+Public Styles
+-----------------------------------------------
+site:		designadmin.com
+file:		/css/public.css
+author:		Stephen Bau
+firm:		Bauhouse Design
+date:		9 September 2007
+----------------------------------------------- */
+
+
+/*
+-----------------------------------------------
+Basic Styles
+----------------------------------------------- */
+@media print {
+    .myDivToPrint {
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+        font-size: 14px;
+        line-height: 18px;
+    }
+    .calendar-menu {display:none;}
+}
+body {
+	margin: 0;
+	padding: 0;
+	font: normal 75%/1.5em helvetica, arial, sans-serif;
+	background: #ddd;
+	}
+* {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	border: none;
+	color: #333;
+	list-style-type: none;
+	}
+:lang(ar) {
+	direction:rtl;
+	text-align:right;
+}
+
+/* anchors
+----------------------------------------------- */
+a { 
+	color: #333;
+	text-decoration: none;
+	}
+a:link, a:visited, a:active  { 
+	color: #900;
+	text-decoration: none;
+	}
+a:hover {
+	color: #000;
+	text-decoration: none;
+	}
+
+
+/* images
+----------------------------------------------- */
+img {
+	border: none;
+}
+
+
+/*
+-----------------------------------------------
+Typography
+----------------------------------------------- */
+
+h1 {font-size: 1.6em;}
+h2 {font-size: 1.5em;}
+h3 {font-size: 1.4em;}
+h4 {font-size: 1.3em;}
+h5 {font-size: 1.2em;}
+h6 {font-size: 1.1em;}
+
+
+p {margin: 0;}
+
+ol, ul {margin: 0;}
+
+ul li,
+ol li {margin: 0;}
+
+blockquote {
+	margin: 2em 0;
+	padding: 0 2em;
+	border-left: 4px solid #ddd;
+	}
+
+pre {
+	display: block;
+	margin: 2em 0;
+	padding: 1em;
+	border-left: 1px solid #ccc;
+	background-color: #efefef;
+	overflow: auto;
+    white-space: normal;
+	}
+
+abbr,
+acronym,
+.help {
+  border-bottom: 1px dotted #333;
+  cursor: help;
+  }
+
+.small { font-size: 0.9em;	}
+
+
+
+/*
+-----------------------------------------------
+Layout
+----------------------------------------------- */
+
+
+/* Main Divs
+----------------------------------------------- */
+#header {
+	background:#000;
+	}
+#navigation {
+	background:#666 url(../img/shadow_tab.gif) center bottom repeat-x;
+	}
+#page {
+	background:#fff;
+	}
+#footer {
+	background: #ddd url(../img/shadow_footer.gif) center top repeat-x;
+	}
+
+
+/* Boxes
+----------------------------------------------- */
+.box {
+	min-width:975px;
+	}
+#header .box {
+	display:block;
+	height:6em;
+	background:#000;
+	}
+#navigation .box {
+	border:0;
+	padding:0;
+	height:3em;
+	overflow:hidden;
+	}
+#page .box {
+	float:left;
+	width:100%;
+	background:#fff;
+	}
+#footer .box {
+	float:left;
+	width: 100%;
+	background: #ddd url(../img/shadow_footer.gif) center top repeat-x;
+	}
+
+
+/* header
+----------------------------------------------- */
+#header h1 {
+	font:normal 1.8em/1.2em helvetica, arial, sans-serif;
+	color:#fff;
+	padding-top:1em;
+	padding-left:1.2em;
+	}
+#header h1 a {
+	display: inline;
+	width: auto;
+	color: #fff;
+	margin:0;
+	font-weight: normal;
+	}
+#header h1 a:hover {
+	color: #f00;
+	}
+#header h1 a strong {
+	color: #f00;
+	font-weight: normal;
+	}
+#header h1 a:hover strong {
+	color: #fff;
+	}
+
+
+/* navigation
+----------------------------------------------- */
+#navigation li {
+	display:inline;
+	height:3em;
+	border:0;
+	padding:0;
+	}
+#navigation li a {
+	float:left;
+	display: block;
+	margin:0;
+	padding:0 .7em;
+	color:#ccc;
+	background:none;
+	line-height:3em;
+	}
+#navigation li a:hover {
+	color:#fff;
+	background:#555;
+	}
+#navigation li a:active,
+#navigation li.current a,
+#navigation li.current a:hover {
+	color:#fff;
+	background:#444;
+	}
+#navigation .main {
+	float:right;
+	margin-right:2em;
+	}
+#navigation .content {
+	padding:0;
+	border:0;
+	height:3em;
+	margin-left:2em;
+	}
+#navigation .content li {
+	display:inline;
+	height:2.5em;
+	border:0;
+	padding:0;
+	}
+#navigation .content li a {
+	float:left;
+	display: block;
+	margin: 0;
+	margin-right: .2em;
+	margin-top:.5em;
+	line-height: 2.5em;
+	padding: 0 1em;
+	color:#000;
+	background: #ddd url(../img/shadow_tab_off.gif) center bottom repeat-x;
+	border: 0;
+	}
+#navigation .content li a:hover {
+	color:#900;
+	background: #eee url(../img/shadow_tab_over.gif) center bottom repeat-x;
+	}
+#navigation .content li a:active,
+#navigation .content li.current a,
+#navigation .content li.current a:hover {
+	color:#f00;
+	background:#fff url(../img/shadow_tab_active.gif) center bottom repeat-x;
+	}
+
+
+/* sectionhead
+----------------------------------------------- */
+#sectionhead { 
+	color:#fff;
+	background:#444;
+	}
+#sectionhead h2 { 
+	width:732px;
+	margin:0 auto;
+	padding: 0 12px .2em 12px;
+	font-weight:normal;
+	font-size:1.2em;
+	line-height:1.8em;
+	color:#fff;
+	background:#000;
+	}
+
+
+/* columns
+----------------------------------------------- */
+#content {
+	float:left;
+	width:50%;
+	}
+#content .body {
+	border-right:1px dotted #ccc;
+	}
+#links {
+	float:left;
+	width:29.9%;
+	}
+#meta {
+	float:left;
+	width:20%;
+	}
+#meta .body {
+	padding-left:0;
+	}
+
+/* body styles
+----------------------------------------------- */
+.body {
+	padding:2em;
+	}
+.body h2 {
+	font-weight:normal;
+	color:#000;
+	}
+.body h3,
+.body h4 { 
+	font-size:.9em;
+	font-weight: normal;
+	letter-spacing:.2em;
+	text-transform: uppercase;
+	}
+.body h3 { 
+	margin: 2em 0 1.5em 0;
+	padding:3px 0;
+	border-top:1px solid #000;
+	border-bottom:1px solid #ccc;
+	}
+.body h4,
+.body h4 span {
+	color:#f00;
+	margin-top:1.5em;
+	}
+.body p {
+	margin-top:1em;
+	}
+.body a {
+	font-weight:bold;
+	color:#000;
+	}
+.body a:hover {
+	color:#f00;
+	}
+#content .body ul {
+	padding-left:2em;
+	}
+#content .body ul li {
+	list-style-type:square;
+	margin-bottom:.5em;
+	}
+
+/* lists
+----------------------------------------------- */
+.lists h3 { 
+	font-size:.9em;
+	color:#f00;
+	}
+.lists ul { 
+	font-size:.9em;
+	line-height:1.4em;
+	margin-bottom:10px;
+	}
+.lists ul.posts li {
+	list-style-image:url(../img/a_post.gif);
+	}
+.lists ul.categories li {
+	list-style-image:url(../img/a_category.gif);
+	}
+.lists ul.links li {
+	list-style-image:url(../img/a_link_arrow.gif);
+	}
+.lists ul.file_download_list li {
+	list-style-image:url(../img/a_download.gif);
+	}
+.lists ul.feeds li {
+	list-style-image:url(../img/a_feed.gif);
+	}
+.lists ul.categories li.subcategory {
+	list-style-image:none;
+	padding-left:15px;
+	background:url(../img/a_subcategory.gif) left 3px no-repeat;
+	}
+.lists ul {
+	margin-bottom:15px;
+	}
+.lists ul li {
+	margin:2px 0 2px 20px;
+	padding-bottom:2px;
+	border-bottom:1px solid;
+	}
+.lists li a {
+	display:block;
+	padding:1px 0;
+	height:1%; /* IE WIN */
+	}
+.lists ul li {
+	border-bottom-color:#eee;
+	}
+.lists li a:hover {
+	color:#f00;
+	}
+.lists li a:active {
+	color:#f00;
+	}
+.lists li.date_small {font-size:.8em; margin:0;}
+
+/* calendar
+----------------------------------------------- */
+.calendar .calendar-head {
+	}
+.calendar h2 {
+	display:inline;
+	}
+.calendar-menu {
+	float:right;
+	margin-bottom:1em;
+	}
+.calendar-menu li {
+	display:inline;
+	}
+.calendar-menu li a {
+	float:left;
+	color:#ccc;
+	font-weight:normal;
+	margin-left:1em;
+	border-bottom:3px solid #fff;
+	}
+.calendar-menu li.current a {
+	color:#000;
+	font-weight:bold;
+	border-bottom:3px solid #f00;
+	}
+.calendar-menu li a:hover {
+	float:left;
+	color:#000;
+	margin-left:1em;
+	border-bottom:3px solid #ccc;
+	}
+.calendar table {
+	border-collapse:collapse;
+	width:100%;
+	margin-top:1.8em;
+	}
+.calendar thead tr {
+	border-top:1px solid #000;
+	}
+.calendar tfoot tr {
+	border-bottom:1px solid #000;
+	}
+.calendar tfoot tr td {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	height: 3em;
+	font: normal 90%/1.8em serif;
+}
+.calendar th {
+	text-align:center;
+	padding:.5em 0;
+	}
+.calendar td {
+	width:14%;
+	padding-top:0;
+	height:8em;
+	vertical-align:top;
+	border-right:1px solid #ddd;
+	border-left:1px solid #ddd;
+	}
+.calendar td#today {
+	background:#fffacc;
+	}
+.calendar td.current {
+	background:#def;
+	}
+.calendar tbody td {
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	padding: 0em 0.5em 0.5em 0.5em;
+	}
+.calendar span a {
+	float:right;
+	font-weight:normal;
+	background:#fff;
+	padding:.1em .5em;
+	margin-left:.5em;
+	border-left:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+	}
+.calendar .holiday {
+	color:#f00;
+	}
+.calendar td#today span a,
+.calendar td.current span a {
+	background:#000;
+	color:#fff;
+	font-weight:bold;
+	border-left:1px solid #000;
+	border-bottom:1px solid #000;
+	}
+.calendar td.previous-month-day span a,
+.calendar td.next-month-day span a {
+	color:#ccc;
+	background:transparent;
+	border:0;
+	}
+.calendar td.previous-month-day:hover span a,
+.calendar td.next-month-day:hover span a {
+	background:#ccc;
+	border:0;
+	}
+.calendar td.previous-month-day span a:hover,
+.calendar td.next-month-day span a:hover {
+	background:#999;
+	border:0;
+	}
+.calendar td p {
+	/*margin:.5em .5em .5em .8em;*/
+	margin: 0 0 0 0;
+	}
+.calendar table tbody tr:hover td {
+	background:#f6f6f6;
+	}
+.calendar table tbody tr:hover td.current {
+	background:#def;
+	}
+.calendar table tbody tr td:hover {
+	background:#ecf5ff;
+	}
+.calendar table tbody tr td.current:hover {
+	background:#def;
+	}
+.calendar table tbody tr td:hover span a {
+	background:#666;
+	color:#fff;
+	border-left:1px solid #666;
+	border-bottom:1px solid #666;
+	}
+.calendar table tbody tr td.current:hover span a {
+	background:#36c;
+	color:#fff;
+	border-left:1px solid #36c;
+	border-bottom:1px solid #36c;
+	}
+.calendar table tbody tr td#today:hover span a {
+	background:#f00;
+	color:#fff;
+	border-left:1px solid #f00;
+	border-bottom:1px solid #f00;
+	}
+.calendar table tbody tr td span a:hover,
+.calendar table tbody tr td span a:hover {
+	background:#333;
+	border-left:1px solid #333;
+	border-bottom:1px solid #333;
+	}
+.previous-month,
+.next-month {
+	float:left;
+	width:48%;
+	margin:2em 0;
+	}
+.previous-month {
+	margin-right:4%;
+	}
+.previous-month h3,
+.next-month h3 {
+	font-size:1.4em;
+	text-transform:none;
+	letter-spacing:0;
+	padding:0 0 1em 0;
+	margin-bottom:0;
+	border:0;
+	}
+.previous-month table,
+.next-month table {
+	margin-top:0;
+	}
+.previous-month table td,
+.next-month table td {
+	height:5em;
+	}
+
+
+.calendar-year {
+	float:left;
+	width:100%;
+	margin-bottom:2em;
+	}
+.calendar-year .current table tbody {
+	background:#def;
+	}
+.calendar-year .today table tbody {
+	background:#fffacc;
+	}
+.calendar-year .calendar-month table tbody tr td span a:hover {
+	background:#ccc;
+	color:#000;
+	}
+.calendar-year .calendar-month table tbody tr td span a:active {
+	background:#000;
+	color:#fff;
+	}
+.calendar-year .calendar-month table tbody tr td.holiday span a {
+	background:#fc6;
+	color:#000;
+	}
+.calendar-year .calendar-month table tbody tr td.holiday:hover span a {
+	background:#fc6;
+	color:#000;
+	}
+.calendar-year .calendar-month table tbody tr td.current span a {
+	background:#36c;
+	color:#fff;
+	}
+.calendar-year .calendar-month table tbody tr td.current:hover span a {
+	background:#000;
+	color:#fff;
+	}
+.calendar-year .calendar-month table tbody tr td.current.holiday span a {
+	background:#390;
+	color:#fff;
+	}
+.calendar-year .calendar-month table tbody tr td#today span a {
+	background:#f00;
+	color:#fff;
+	}
+.calendar-year .calendar-month table tbody tr td#today:hover span a {
+	background:#000;
+	color:#fff;
+	}
+
+
+.calendar-month {
+	float:left;
+	width:30%;
+	margin-right:5%;
+	min-height:20em;
+	}
+.calendar-month h3 {
+	font-size:1em;
+	margin-bottom:.5em;
+	}
+#month-03,
+#month-06,
+#month-09,
+#month-12 {
+	margin-right:0;
+	}
+.calendar-month table {
+	width:100%;
+	border-collapse:collapse;
+	}
+.calendar-month table th {
+	font-weight:normal;
+	}
+.calendar-month table td {
+	width:14%;
+	text-align:center;
+	border:1px solid #fff;
+	}
+.calendar-month table td a {
+	display:block;
+	line-height:2em;
+	padding:0;
+	}
+.calendar-month table tbody tr:hover td {
+	background:#eee;
+	}
+.calendar-month table tbody tr td:hover {
+	background:#fff;
+	}
+.calendar-month table tbody tr td:hover span a {
+	background:#333;
+	color:#fff;
+	}
+.calendar-month table tbody tr td:hover span a:active {
+	background:#000;
+	}
+.calendar-month table tbody tr td#today span a {
+	background:#000;
+	color:#fff;
+	}
+.calendar-month table tbody tr td#today:hover span a {
+	background:#f00;
+	color:#fff;
+	}
+
+
+.calendar-week table tbody tr.hour-row td {
+	height:2em;
+	}
+.calendar-week table tbody tr td {
+	width:13%;
+	}
+.calendar-week table tbody tr td.hour {
+	width:9%;
+	text-align:right;
+	height:2em;
+	padding:.6em 1em .3em 0;
+	}
+
+
+.calendar-day table tbody tr th {
+	text-align:left;
+	}
+.calendar-day table tbody tr td {
+	height:2em;
+	padding:.6em 1em .3em 0;
+	width:90%;
+	}
+.calendar-day table tbody tr td.hour {
+	width:10%;
+	text-align:right;
+	}
+.calendar.calendar-day tr th.holiday {
+	text-align:left;
+	}
+
+/* Byzantine Liturgical requirements
+----------------------------------------------- */
+.class1feast {
+	font-size:1.2em;
+	font-weight:bold;
+	color:#FF0000;
+}
+.class2feast {
+	font-size:1.2em;
+	font-weight:bold;
+}
+.class3feast {
+	font-size:1.0em;
+	font-weight:bold;
+	color:#FF0000;
+}
+.class4feast {
+	font-size:1.0em;
+	font-weight:bold;
+}
+.class5feast {
+	font-size:1.0em;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+.T1 {
+	font-size:1.0em;
+	font-weight:bold;
+	font-family:Arial;
+	line-height:100%;
+	direction:left;
+}
+.T2 {
+	font-size:0.8em;
+	font-weight:normal;
+	font-family:Times New Roman;
+	line-height:110%;
+	direction:left;
+}
+.tc_readings {
+	color:#333399;
+	font-family:Times New Roman;
+	font-size:0.8em;
+	font-weight:normal;
+	line-height:90%;
+	direction:left;
+	vertical-align:bottom;
+}
+.tc_addnl_ar_name {
+	font-family:Traditional Arabic;
+	font-size: 1.0em;
+	font-weight:bold;
+	direction:rtl;
+	text-align:right;
+}
+.feastNfastIndicator {
+	margin: 0 auto;
+}
+.closeLinesPara {
+	line-weight: 80%;
+}
+.closishLinesPara {
+	line-weight: 90%;
+}
+.nevidebla {
+	visibility: hidden;
+}
+
+/* footer
+----------------------------------------------- */
+#footer ul {
+	float:left;
+	padding:2em;
+	}
+#footer ul li {
+	float:left;
+	margin-right:1em;
+	font-size:.9em;
+	color:#666;
+	}
+#footer ul li a,
+#footer ul li a:visited {
+	margin-right:1em;
+	color:#000;
+	}
+#footer ul li a:hover {
+	color:#900;
+	}
+#footer ul li a:active {
+	color:#f00;
+	}
+#footer #switchform {
+	float:right;
+	padding:2em;
+	}

@@ -1,0 +1,22 @@
+(deftemplate MovedToSundaysFact
+	(slot TypeIndex (default nil))
+ (slot Feast_en (default nil))
+ (slot CalendarGEN (default nil))
+ (slot CalType (default nil))
+ (slot IfNotMoved (default nil))
+ )
+
+(assert (MovedToSundaysFact (TypeIndex "VAR034") (Feast_en "Epiphany") (CalendarGEN 0) (CalType "AU") (IfNotMoved "FIX006") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR041") (Feast_en "Ascension") (CalendarGEN 0) (CalType "AU") (IfNotMoved "MOV086") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR042") (Feast_en "Corpus Christi") (CalendarGEN 0) (CalType "AU") (IfNotMoved "MOV107") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR034") (Feast_en "Epiphany") (CalendarGEN 0) (CalType "ENG") (IfNotMoved "FIX006") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR034") (Feast_en "Epiphany") (CalendarGEN 0) (CalType "WLS") (IfNotMoved "FIX006") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR042") (Feast_en "Corpus Christi") (CalendarGEN 0) (CalType "ENG") (IfNotMoved "MOV107") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR042") (Feast_en "Corpus Christi") (CalendarGEN 0) (CalType "WLS") (IfNotMoved "MOV107") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR034") (Feast_en "Epiphany") (CalendarGEN 0) (CalType "NZ") (IfNotMoved "FIX006") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR041") (Feast_en "Ascension") (CalendarGEN 0) (CalType "NZ") (IfNotMoved "MOV086") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR042") (Feast_en "Corpus Christi") (CalendarGEN 0) (CalType "NZ") (IfNotMoved "MOV107") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR042") (Feast_en "Corpus Christi") (CalendarGEN 0) (CalType "US") (IfNotMoved "MOV107") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR041") (Feast_en "Ascension") (CalendarGEN 0) (CalType "US") (IfNotMoved "MOV086") ))
+(assert (MovedToSundaysFact (TypeIndex "VAR034") (Feast_en "Epiphany") (CalendarGEN 0) (CalType "US") (IfNotMoved "FIX006") ))
+
