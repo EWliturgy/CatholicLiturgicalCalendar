@@ -11,7 +11,7 @@ Several general and local calendars are supported today:
  - Scotland
  - Wales.
 
-There are several technologies in use for this solution. 
+There are several technologies used in this solution. 
 
 The CLIPS globals, templates, functions, facts, and rules hold all the necessary information and can be used stand-alone within a CLIPS environment (or command-line interface). The resultant facts represent all celebrations for the year based on the local calendar and language chosen. The name of the fact holding the results is: "RCcalThisYear".
 
