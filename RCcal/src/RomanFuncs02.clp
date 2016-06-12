@@ -4,11 +4,13 @@
 ;;;These functions calculate the date of Easter, including the Easter falling before or after a given date.
 
 ;;;Rules and functions start here
+;;;  As at 2016-02-24 this function does not appear to work in CLIPS for 2200, 3300, and 3500.
+;;;  I have tested it to AD 2030 and it is accurate for each year. Perhaps a CLIPS mathematics library problem?
 (deffunction F10_CalcEaster
     (?imYear ?imMethod)
-    
+
     ;validate the arguments
-    (if (or (< ?imMethod ?*iEDM_JULIAN*) (> ?imMethod ?*iEDM_WESTERN*)) then
+    (if (and (!= ?imMethod ?*iEDM_JULIAN*) (!= ?imMethod ?*iEDM_ORTHODOX*) (!= ?imMethod ?*iEDM_WESTERN*)) then
         (return nil)
     )
     (if (and (= ?imMethod ?*iEDM_JULIAN*) (< ?imYear ?*iFIRST_EASTER_YEAR*)) then
@@ -32,8 +34,6 @@
         (bind ?iDay (+ ?iG 1))
         (bind ?dTemp (mkDate ?imYear ?iMonth ?iDay))
         (if (= ?imMethod ?*iEDM_ORTHODOX*) then
-            ;(bind ?iTemp (pJulianToCJDN ?imYear ?iMonth ?iDay))
-            ;(bind ?dTemp (pCJDNToMilankovic ?iTemp))
             (bind ?iTemp (daysAdd ?dTemp (CalcDayDiffJulianCal ?dTemp)))
             (return ?iTemp)
         else
@@ -42,24 +42,24 @@
         )
     else
         (if (= ?imMethod ?*iEDM_WESTERN*) then
-             ;From Ian Stewarts page of OBeirnes formula:
+             ;From Ian Stewart's page of O'Beirne's formula:
             ;   http://www.whydomath.org/Reading_Room_Material/ian_stewart/2000_03.html .
             (bind ?iA (mod ?imYear 19))
-            ;;;   ?iA + 1 is the year's Golden Number.
+            ;;;   ?iA + 1 is the year’s Golden Number.
             (bind ?iB (div ?imYear 100))
             (bind ?iC (mod ?imYear 100))
             (bind ?iD (div ?iB 4))
             (bind ?iE (mod ?iB 4))
             (bind ?iG (div (+ (* 8 ?iB) 13) 25))
             (bind ?iH (mod (+ (- (- (+ (* 19 ?iA) ?iB) ?iD) ?iG) 15) 30))
-            ;;;   The year's Epact is 23 – ?iH when ?iH is less than 24 and 53 – ?iH otherwise.
+            ;;;   The year’s Epact is 23 – ?iH when ?iH is less than 24 and 53 – ?iH otherwise.
             (bind ?iM (div (+ ?iA (* 11 ?iH)) 319))
             (bind ?iJ (div ?iC 4))
             (bind ?iK (mod ?iC 4))
             (bind ?iL (mod (+ (+ (- (- (+ (* 2 ?iE) (* 2 ?iJ)) ?iK) ?iH) ?iM) 32) 7))
             (bind ?iN (div (+ (+ (- ?iH ?iM) ?iL) 90) 25))
             (bind ?iP (mod (+ (+ (+ (- ?iH ?iM) ?iL) ?iN) 19) 32))
-            ;;;   The years dominical letter can be found by dividing 2E + 2J – K by 7,
+            ;;;   The year’s dominical letter can be found by dividing 2E + 2J – K by 7,
             ;;;      and taking the remainder (a remainder of 0 is equivalent to the letter A,
             ;;;      1 is equivalent to B, and so on.
             (bind ?imDay ?iP)
@@ -70,21 +70,20 @@
             (return nil)
         )
     )
-
 )
 
 (deffunction F09_CalcPreviousEaster
     (?dDate ?iDateMethod)
-    
+
     ;Check arguments
     (bind ?iYearTemp (yearFromDateINT ?dDate))
     (if (or (not (integerp ?dDate)) (not (integerp ?iDateMethod))) then
         (return nil)
     )
-    (if (or (< ?iDateMethod ?*iEDM_JULIAN*) (> ?iDateMethod ?*iEDM_WESTERN*)) then
+    (if (and (!= ?iDateMethod ?*iEDM_JULIAN*) (!= ?iDateMethod ?*iEDM_ORTHODOX*) (!= ?iDateMethod ?*iEDM_WESTERN*)) then
         (return nil)
     )
-    
+
     (bind ?dDateHolder (F10_CalcEaster ?iYearTemp ?iDateMethod))
     (if (< ?dDateHolder ?dDate) then
         (return ?dDateHolder)
@@ -95,17 +94,17 @@
 
 (deffunction F11_CalcNextEaster
     (?dDate ?iDateMethod)
-    
-    
+
+
     ;Check arguments
     (bind ?iYearTemp (yearFromDateINT ?dDate))
     (if (or (not (integerp ?dDate)) (not (integerp ?iDateMethod))) then
         (return nil)
     )
-    (if (or (< ?iDateMethod ?*iEDM_JULIAN*) (> ?iDateMethod ?*iEDM_WESTERN*)) then
+    (if (and (!= ?iDateMethod ?*iEDM_JULIAN*) (!= ?iDateMethod ?*iEDM_ORTHODOX*) (!= ?iDateMethod ?*iEDM_WESTERN*)) then
         (return nil)
     )
-    
+
     (bind ?dDateHolder (F10_CalcEaster ?iYearTemp ?iDateMethod))
     (if (> ?dDateHolder ?dDate) then
         (return ?dDateHolder)

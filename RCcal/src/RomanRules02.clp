@@ -41,7 +41,7 @@
     =>
     ;These civil commemorations, such as national holidays, are not found in the General Roman Calendar.
     ;   Hence this rule only seeks civil commemorations from the local calendar.
-    
+
     ;Special case of CAL_US004 ("Day of Prayer for the Legal Protection of Unborn Children")
     (if (and (eq ?*calendarInUse* "US") (eq ?fTypeIndex "CAL_US004")) then
         (bind ?iTemp (mkDate ?*yearSought* ?fMonth ?fDay))
@@ -63,7 +63,7 @@
             (bind ?iTemp (mkDate ?*yearSought* ?fMonth ?fDay))
         )
     )
-    
+
     (modify ?f1 (Date_this_year ?iTemp))
     (assert (RCcalThisYear (Date_this_year ?iTemp) (TypeIndex ?fTypeIndex) (TableLitDayRank 1001)))
 )
@@ -148,7 +148,7 @@
             (bind ?iTemp (daysAdd ?iTemp 1))
         )
     )
-    
+
     (modify ?f1 (Date_this_year ?iTemp))
     (assert (RCcalThisYear (Date_this_year ?iTemp) (TypeIndex ?fTypeIndex) (TableLitDayRank 1001)))
 )
@@ -431,7 +431,7 @@
     )
     ;Check whether the date for the Solemnity is valid, or should be moved.
     (bind ?iTemp (pFindNewDateForSolemnities ?iTemp ?fTypeIndex))
-    
+
     (modify ?f1 (Date_this_year ?iTemp))
     (assert (RCcalThisYear (Date_this_year ?iTemp) (TypeIndex ?fTypeIndex) (TableLitDayRank 1400)))
 )
@@ -499,7 +499,7 @@
             (bind ?sCycle nil)
         )
     )
-    
+
     ;If the rankings are not equal, we should delete the lesser in importance (higher TableLitDayRank) and proceed.
     ;Retract the RCcalThisYear fact for the lesser ranking feast.
     (if (< ?iRank1 ?iRank2) then
@@ -527,7 +527,8 @@
             ;  We can thus not determine the more important feast, and merely suppress the second.
             (retract ?f2)
         else
-            (if (and (or (eq ?c1Rank "Memoria") (eq ?c2Rank "Memoria")) (or (eq ?f1TypeIndex "MOV116") (eq ?f2TypeIndex "MOV116"))) then
+            (if (or (and (eq ?c1Rank "Memoria") (eq ?f2TypeIndex "MOV116")) (and (eq ?f1TypeIndex "MOV116") (eq ?c2Rank "Memoria"))) then
+                ;Used to be: (and (or (eq ?c1Rank "Memoria") (eq ?c2Rank "Memoria")) (or (eq ?f1TypeIndex "MOV116") (eq ?f2TypeIndex "MOV116"))) .
                 ;The one occasion where a Memoria clashes with another one.
                 (if (neq ?sCycle nil) then
                     (if (eq ?f1Optional1 nil) then
@@ -580,6 +581,7 @@
                         (if (eq ?f1Optional1 nil) then
                             (modify ?f1 (Optional1 ?f2TypeIndex) (Optional2 ?f2Optional1) (Optional3 ?f2Optional2)(CurrentCycle ?sCycle))
                             (retract ?f2)
+
                         else
                             (if (eq ?f1Optional2 nil) then
                                 (modify ?f1 (Optional2 ?f2TypeIndex) (Optional3 ?f2Optional1) (CurrentCycle ?sCycle))
@@ -597,4 +599,3 @@
         )
     )
 )
-

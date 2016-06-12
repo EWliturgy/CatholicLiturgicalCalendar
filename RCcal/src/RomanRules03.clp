@@ -39,13 +39,13 @@
     =>
     ;This feast is celebrated on the Sunday within the Octave of Christmas, if one exists;
     ;   otherwise on 30 December.
-    
+
     ;Check whether a Sunday exists
     (bind ?iTemp (clFindSun (mkDate ?*yearSought* 12 26) (mkDate ?*yearSought* 12 31)))
     (if (eq ?iTemp nil) then
         (bind ?iTemp (mkDate ?*yearSought* 12 30))
     )
-    
+
     (modify ?f1 (Date_this_year ?iTemp))
     (assert (RCcalThisYear (Date_this_year ?iTemp) (TypeIndex ?fTypeIndex) (TableLitDayRank 2500)))
 )
@@ -108,7 +108,7 @@
     (bind ?iTemp (clFindSun (daysAdd ?f2Date_this_year 1) (daysAdd ?f2Date_this_year 7)))
     (modify ?f1 (Date_this_year ?iTemp))
     (assert (RCcalThisYear (Date_this_year ?iTemp) (TypeIndex ?fTypeIndex) (TableLitDayRank 2620)))
-    
+
     ;Create global for the nominal first Sunday of Ordinary Time, although this Sunday does not in fact exist.
     ;(undefglobal FirstSunOrdinaryTime)
     (bind ?sTemp "(defglobal ?*FirstSunOrdinaryTime* = ")
@@ -154,11 +154,11 @@
     (bind ?iTemp (sub-string 4 5 ?fTypeIndex))
     (if (not (integerp ?iTemp)) then
         ;Get the integer value of the digits found in the TypeIndex string.
-        (bind ?iTemp (string-to-integer ?iTemp)) 
+        (bind ?iTemp (string-to-integer ?iTemp))
     )
     ;Determine date using multiplier
     (bind ?iDate (daysAdd ?f0Date_this_year (* (- ?iTemp 2) 7)))
-    
+
     (if (< ?iDate ?f3Date_this_year) then
         ;Date before Ash Wednesday
         (modify ?f1 (Date_this_year ?iDate))
@@ -168,7 +168,7 @@
         (bind ?iTemp (sub-string 4 5 ?fTypeIndex))
         (if (not (integerp ?iTemp)) then
             ;Get the integer value of the digits found in the TypeIndex string.
-            (bind ?iTemp (string-to-integer ?iTemp)) 
+            (bind ?iTemp (string-to-integer ?iTemp))
         )
         ;Determine date using multiplier
         (bind ?iDate (daysAdd ?f2Date_this_year (* (- 34 ?iTemp) -7)))
@@ -453,7 +453,7 @@
     (bind ?iTemp (sub-string 4 5 ?fTypeIndex))
     (if (not (integerp ?iTemp)) then
         ;Get the integer value of the digits found in the TypeIndex string.
-        (bind ?iTemp (string-to-integer ?iTemp)) 
+        (bind ?iTemp (string-to-integer ?iTemp))
     )
     ;Determine date using multiplier for the week
     (bind ?iDate (daysAdd ?f2Date_this_year (* (- ?iTemp 1) 7)))
@@ -468,7 +468,7 @@
     (bind ?iDoW (sub-string 7 7 ?fTypeIndex))
     (if (not (integerp ?iDoW)) then
         ;Get the integer value of the digits found in the TypeIndex string.
-        (bind ?iDoW (string-to-integer ?iDoW)) 
+        (bind ?iDoW (string-to-integer ?iDoW))
     )
     ;Convert Roman day of the week (Sunday = 1) to computer dates (Sunday = 7)
     (bind ?iDoW (+ ?iDoW 6))
@@ -481,7 +481,7 @@
     (if (= ?iDate ?f2Date_this_year) then
         (retract ?f1)
     )
-    
+
     (if (< ?iDate ?f3Date_this_year) then
         ;Dates before Ash Wednesday
         (modify ?f1 (Date_this_year ?iDate))
@@ -533,7 +533,7 @@
     else
         (bind ?iLit_rank ?f2Lit_rank)
         (if (not (integerp ?iLit_rank)) then
-            (bind ?iLit_rank (string-to-integer ?iLit_rank)) 
+            (bind ?iLit_rank (string-to-integer ?iLit_rank))
         )
      )
 
@@ -578,13 +578,14 @@
     else
         (bind ?iLit_rank ?f2Lit_rank)
         (if (not (integerp ?iLit_rank)) then
-            (bind ?iLit_rank (string-to-integer ?iLit_rank)) 
+            (bind ?iLit_rank (string-to-integer ?iLit_rank))
         )
     )
-    
+
     ;Quick check for MOV116
-    (if (and (= ?f1Date_this_year (daysAdd ?*easter* 69)) (= ?f1TableLitDayRank 3100)) then
+    (if (and (= ?f1Date_this_year (daysAdd ?*easter* 69)) (= ?f1TableLitDayRank 3100) (neq ?f1TypeIndex "MOV116")) then
         ;We have a Memoria on the same date as MOV116
+        (printout t "HIIII: " ?f1TypeIndex crlf)
         (if (neq (sub-string 1 3 ?f1TypeIndex) "ORW") then
             ;If the main TypeIndex is "ORW*", then we already know the cycle.
             (modify ?f1 (TypeIndex ?f3TypeIndex) (Optional1 ?f1TypeIndex) (Optional2 "MOV116") (CurrentCycle ?f3TypeIndex))
@@ -592,10 +593,10 @@
             (modify ?f1 (TypeIndex ?f1TypeIndex) (Optional1 ?f3TypeIndex) (Optional2 "MOV116") (CurrentCycle ?f1TypeIndex))
         )
     else
-        (if (= ?f1Date_this_year (daysAdd ?*easter* 69)) then
-            ;MOV116 not classing with another Memoria, so assert it and let the rules work it out.
-            (assert (RCcalThisYear (Date_this_year ?f1Date_this_year) (TypeIndex "MOV116") (TableLitDayRank 3120)))
-        else
+        ;(if (= ?f1Date_this_year (daysAdd ?*easter* 69)) then
+        ;    ;MOV116 not classing with another Memoria, so assert it and let the rules work it out.
+        ;    (assert (RCcalThisYear (Date_this_year ?f1Date_this_year) (TypeIndex "MOV116") (TableLitDayRank 3120)))
+        ;else
             ;Memorias and Optional Memorias use readings from the weekday, unless proper readings exist (GIRM, n. 357).
             (if (and (>= ?iLit_rank 10) (<= ?iLit_rank 12)) then
                 (if (neq (sub-string 1 3 ?f1TypeIndex) "ORW") then
@@ -605,16 +606,16 @@
                     (modify ?f1 (CurrentCycle ?f1TypeIndex))
                 )
             )
-        )
+        ;)
     )
-    
+
 
 )
 (defrule pDoYearlyReadingsCycle
     (declare (salience ?*lower-priority*))
     (phase-03-minorFeasts)
     ?f1 <- (do-YearlyReadingsCycle)
-    
+
     =>
     (retract ?f1)
     ;Find First Sunday of Advent for Previous Year.
@@ -635,10 +636,10 @@
             (bind ?sTempSunday "B")
         )
     )
-    
+
     (assert (YearlyCycle (Year ?*yearSought*) (CycleStarts ?iTempStart) (SundayCycle ?sTempSunday) (WeekdayCycle ?iTempWeekday)))
 )
-(defrule convertDatesToText
+(defrule convertDatesToTextAndEDM
     (declare (salience ?*lower-priority*))
     (phase-03-minorFeasts)
     ?f1 <- (RCcalThisYear (Date_this_year ?f1Date_this_year&~nil)
@@ -647,7 +648,7 @@
     =>
     ;This is only required for readability.
     ; Delete rule, if not required.
-    (modify ?f1 (Date_ISO8601 (unmakeDate ?f1Date_this_year)))
+    (modify ?f1 (Date_ISO8601 (unmakeDate ?f1Date_this_year)) (EDM ?*requestedEDM*))
 )
 (defrule rLocalCalendarChosenForInterpretingTheYear
     (declare (salience ?*lower-priority*))
@@ -672,6 +673,7 @@
                     (TypeIndex ?f1TypeIndex)
                     (CurrentCycle ?f1CurrentCycle)
                     (PsalterWeek ?f1PsalterWeek&nil)
+                    (PrintOnCal ?f1PrintOnCal)
            )
     =>
     ;;;From the General Instruction on the Liturgy of the Hours, n. 133
@@ -682,65 +684,76 @@
     ;After Pentecost, since the cycle of the psalter follows the sequence of weeks, it is taken up
     ; from that week of the psalter which is indicated at the beginning of the respective week
     ; in the Proper of the Season.
-    
+
     ;We shall set this value for every day of the year, although it is expected that it should be displayed
     ; on a calendar only for Sundays and Mondays (where a Sunday is not of the current cycle).
+    ;Updated 2016-05-27 to use CJDN not the UNIX timestamp.
     (if (or (= ?f1Date_this_year ?*firstSundayAdvent*) (= ?f1Date_this_year ?*FirstSunOrdinaryTime*) (= ?f1Date_this_year (daysAdd ?*easter* -42)) (= ?f1Date_this_year ?*easter*)) then
         (modify ?f1 (PsalterWeek 1))
     else
         ;step through the Liturgical Year. We shall treat the weeks at the beginning of the year last.
         (if (> ?f1Date_this_year ?*firstSundayAdvent*) then
             ;Date is between the First Sunday of Advent and 31 Dec, inclusive of the latter.
-            (bind ?iDaysDiff (- (div ?f1Date_this_year 60 60 24) (div ?*firstSundayAdvent* 60 60 24)))
+            (bind ?iDaysDiff (- ?f1Date_this_year ?*firstSundayAdvent*))
             (bind ?iNumWeeks (div ?iDaysDiff 7))
             (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
             (modify ?f1 (PsalterWeek ?iPsalterCycle))
-        )
-        (if (and (> ?f1Date_this_year ?*easter*) (<= ?f1Date_this_year (daysAdd ?*easter* 49))) then
-            ;Date is between Easter and Pentecost, inclusive of the latter.
-            (bind ?iDaysDiff (- (div ?f1Date_this_year 60 60 24) (div ?*easter* 60 60 24)))
-            (bind ?iNumWeeks (div ?iDaysDiff 7))
-            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
-            (modify ?f1 (PsalterWeek ?iPsalterCycle))
-        )
-        (if (and (> ?f1Date_this_year (daysAdd ?*easter* -42)) (< ?f1Date_this_year ?*easter*)) then
-            ;Date is in Lent.
-            (bind ?iDaysDiff (- (div ?f1Date_this_year 60 60 24) (div (daysAdd ?*easter* -42) 60 60 24)))
-            (bind ?iNumWeeks (div ?iDaysDiff 7))
-            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
-            (modify ?f1 (PsalterWeek ?iPsalterCycle))
-        )
-        (if (and (> ?f1Date_this_year ?*FirstSunOrdinaryTime*) (< ?f1Date_this_year (daysAdd ?*easter* -46))) then
-            ;Date is in the first part of Ordinary Time.
-            (bind ?iDaysDiff (- (div ?f1Date_this_year 60 60 24) (div ?*FirstSunOrdinaryTime* 60 60 24)))
-            (bind ?iNumWeeks (div ?iDaysDiff 7))
-            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
-            (modify ?f1 (PsalterWeek ?iPsalterCycle))
-        )
-        (if (and (> ?f1Date_this_year (daysAdd ?*easter* 49)) (< ?f1Date_this_year ?*firstSundayAdvent*)) then
-            ;Date is in the last part of Ordinary Time.
-            ;In this instance, we work back from the end of the period
-            (bind ?iDaysDiff (- (div ?*firstSundayAdvent* 60 60 24) (div ?f1Date_this_year 60 60 24)))
-            (bind ?iNumWeeks (div ?iDaysDiff 7))
-            (if (= (DoW ?f1Date_this_year) 7) then
-                (bind ?iNumWeeks (- ?iNumWeeks 1))
+        else
+            (if (and (> ?f1Date_this_year ?*easter*) (<= ?f1Date_this_year (daysAdd ?*easter* 49))) then
+                ;Date is between Easter and Pentecost, inclusive of the latter.
+                (bind ?iDaysDiff (- ?f1Date_this_year ?*easter*))
+                (bind ?iNumWeeks (div ?iDaysDiff 7))
+                (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
+                (modify ?f1 (PsalterWeek ?iPsalterCycle))
+            else
+                (if (and (> ?f1Date_this_year (daysAdd ?*easter* -42)) (< ?f1Date_this_year ?*easter*)) then
+                    ;Date is in Lent.
+                    (bind ?iDaysDiff (- ?f1Date_this_year (daysAdd ?*easter* -42) ))
+                    (bind ?iNumWeeks (div ?iDaysDiff 7))
+                    (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
+                    (modify ?f1 (PsalterWeek ?iPsalterCycle))
+                else
+                    (if (and (> ?f1Date_this_year ?*FirstSunOrdinaryTime*) (< ?f1Date_this_year (daysAdd ?*easter* -46))) then
+                        ;Date is in the first part of Ordinary Time.
+                        (bind ?iDaysDiff (- ?f1Date_this_year ?*FirstSunOrdinaryTime* ))
+                        (bind ?iNumWeeks (div ?iDaysDiff 7))
+                        (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
+                        (modify ?f1 (PsalterWeek ?iPsalterCycle))
+                    else
+                        (if (and (> ?f1Date_this_year (daysAdd ?*easter* 49)) (< ?f1Date_this_year ?*firstSundayAdvent*)) then
+                            ;Date is in the last part of Ordinary Time.
+                            ;In this instance, we work back from the end of the period
+                            (bind ?iDaysDiff (- ?*firstSundayAdvent* ?f1Date_this_year ))
+                            (bind ?iNumWeeks (div ?iDaysDiff 7))
+                            (if (= (DoW ?f1Date_this_year) 7) then
+                                (bind ?iNumWeeks (- ?iNumWeeks 1))
+                            )
+                            (bind ?iNumWeeks (- 33 ?iNumWeeks))
+                            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
+                            ;check whether it is the first week of resumption, if so set it to printable
+                            (bind ?sPrintOnCal ?f1PrintOnCal)
+                            (if (< ?f1Date_this_year (daysAdd ?*easter* 56)) then
+                                (bind ?sPrintOnCal 1)
+                            )
+                            (modify ?f1 (PsalterWeek ?iPsalterCycle) (PrintOnCal ?sPrintOnCal))
+                        else
+                            ;Final part: caters for the weeks between Christmas last year and the beginning of Ordinary Time
+                            (if (< ?f1Date_this_year ?*FirstSunOrdinaryTime*) then
+                                ;Date is before the first Ordinary Sunday of the year.
+                                ; We need to find the First Sunday of Advent from the preceding year
+                                (bind ?dTemp (daysAdd (clFindSun (mkDate (- ?*yearSought* 1) 12 18) (mkDate (- ?*yearSought* 1) 12 24)) -21))
+                                (bind ?iDaysDiff (- ?f1Date_this_year ?dTemp ))
+                                (bind ?iNumWeeks (div ?iDaysDiff 7))
+                                (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
+                                (modify ?f1 (PsalterWeek ?iPsalterCycle))
+                            )
+                        )
+                    )
+                )
             )
-            (bind ?iNumWeeks (- 33 ?iNumWeeks))
-            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
-            (modify ?f1 (PsalterWeek ?iPsalterCycle))
-        )
-        ;Final part: caters for the weeks between Christmas last year and the beginning of Ordinary Time
-        (if (< ?f1Date_this_year ?*FirstSunOrdinaryTime*) then
-            ;Date is before the first Ordinary Sunday of the year.
-            ; We need to find the First Sunday of Advent from the preceding year
-            (bind ?dTemp (daysAdd (clFindSun (mkDate (- ?*yearSought* 1) 12 18) (mkDate (- ?*yearSought* 1) 12 24)) -21))
-            (bind ?iDaysDiff (- (div ?f1Date_this_year 60 60 24) (div ?dTemp 60 60 24)))
-            (bind ?iNumWeeks (div ?iDaysDiff 7))
-            (bind ?iPsalterCycle (+ (mod ?iNumWeeks 4) 1))
-            (modify ?f1 (PsalterWeek ?iPsalterCycle))
         )
     )
-    
+
     ;Final tidy-up for exceptions such as the days of Lent before the First Sunday of Lent
     (if (or (eq ?f1TypeIndex "MOV001") (eq ?f1TypeIndex "MOV002") (eq ?f1TypeIndex "MOV003") (eq ?f1TypeIndex "MOV004")) then
         (modify ?f1 (PsalterWeek 4))
@@ -762,7 +775,7 @@
     ;   Can. 1251: Abstinence from meat, or from some other food as determined by the Episcopal Conference,
     ;      is to be observed on all Fridays, unless a solemnity should fall on a Friday.
     ;      Abstinence and fasting are to be observed on Ash Wednesday and Good Friday.
-    
+
     (bind ?bFasting 0)
     (bind ?bAbstinence 0)
     ;Look for days in Lent first
@@ -789,13 +802,13 @@
             )
         )
     )
-    
+
     ;Check for Australian Ember Days
     (if (or (eq ?f1TypeIndex "CAL_AU015") (eq ?f1TypeIndex "CAL_AU016")) then
         (bind ?bFasting 0)
         (bind ?bAbstinence 1)
     )
-    
+
     (modify ?f1 (FastingToday ?bFasting) (AbstinenceToday ?bAbstinence))
 )
 (defrule beginPhaseFour

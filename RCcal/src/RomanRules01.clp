@@ -15,6 +15,18 @@
     ;   before retracting the current one.
     (assert (phase-01-globals))
 )
+(defrule checkRequestedEDM
+    (declare (salience ?*highest-priority*))
+    (phase-01-globals)
+    (test (not (member$ requestedEDM (get-defglobal-list))))
+    =>
+    ;Runs before EDM is processed.
+    ;Requested EDM is built, if ?*easter* does not exist or is null.
+    ;  This rule catches the possibility of ?*easter* being passed in
+    ;  or built before the expert system runs.
+    (build "(defglobal ?*requestedEDM* = ?*EDM*)")
+
+)
 (defrule checkEasterDatingMethod
     (declare (salience ?*highest-priority*))
     (phase-01-globals)
@@ -27,7 +39,7 @@
     (declare (salience ?*highest-priority*))
     (phase-01-globals)
     (test (and (member$ EDM (get-defglobal-list)) (eq (eval (sym-cat "?*" "EDM" "*")) nil)))
-    
+
     =>
     ;If it hasn't been set, set it to a reasonable default; i.e., Western Easter (Gregorian Calendar).
     (build "(defglobal ?*EDM* = ?*iEDM_WESTERN*)")
@@ -47,7 +59,7 @@
     =>
     ;In case we had to initialise the run with a nil value.
     ;CLIPS cannot determine the system date, so this is a reasonable assumption.
-    (build "(defglobal ?*yearSought* = 2015)")
+    (build "(defglobal ?*yearSought* = 2016)")
 )
 (defrule checkEaster
     (declare (salience ?*higher-priority*))
@@ -55,6 +67,16 @@
     (test (not (member$ easter (get-defglobal-list))))
     =>
     (build "(defglobal ?*easter* = (F10_CalcEaster ?*yearSought* ?*EDM*))")
+
+    ;If an Easter Dating Method is chosen that uses the Julian calendar,
+    ;   reset this EDM to Gregorian after calculating the date of Easter,
+    ;   so that the sanctoral cycle is
+    ;   calculated according to the Gregorian calendar. This configuration is
+    ;   only used in some Middle Eastern countries.
+    (if (= ?*EDM* ?*iEDM_JULIAN*) then
+        (build "(defglobal ?*EDM* = ?*iEDM_WESTERN*)")
+        (build "(defglobal ?*requestedEDM* = ?*iEDM_JULIAN*)")
+    )
 )
 (defrule checkEasterNotNULL
     (declare (salience ?*higher-priority*))
@@ -62,13 +84,23 @@
     (test (and (member$ easter (get-defglobal-list)) (eq (eval (sym-cat "?*" "easter" "*")) nil)))
     =>
     (build "(defglobal ?*easter* = (F10_CalcEaster ?*yearSought* ?*EDM*))")
+
+    ;If an Easter Dating Method is chosen that uses the Julian calendar,
+    ;   reset this EDM to Gregorian after calculating the date of Easter,
+    ;   so that the sanctoral cycle is
+    ;   calculated according to the Gregorian calendar. This configuration is
+    ;   only used in some Middle Eastern countries.
+    (if (= ?*EDM* ?*iEDM_JULIAN*) then
+        (build "(defglobal ?*EDM* = ?*iEDM_WESTERN*)")
+        (build "(defglobal ?*requestedEDM* = ?*iEDM_JULIAN*)")
+    )
 )
 (defrule firstSundayOfAdvent
     (declare (salience ?*high-priority*))
     (phase-01-globals)
     (test (not (member$ firstSundayAdvent (get-defglobal-list))))
     =>
-    ;Find the fourth and final Sunday of Advent, 
+    ;Find the fourth and final Sunday of Advent,
     ;   then find the first Sunday of Advent.
     (build "(defglobal ?*firstSundayAdvent* = (daysAdd (clFindSun (mkDate ?*yearSought* 12 18) (mkDate ?*yearSought* 12 24)) -21))")
 )
