@@ -95,18 +95,20 @@ var iNext5Year = iThisYear + 5;
 					</select>
 				</div>
 			</div>
-			<div class="hidden">
-				<div class="form-group">
-					<select name="monthMenu" id="monthMenu" class="form-control">
-						<option value="1" selected>January</option>
+			<div class="form-group">
+				<label for="edmMenu" class="col-sm-2 control-label">Easter
+					Dating Method</label>
+				<div class="col-sm-5">
+					<select name="edmMenu" id="edmMenu" class="form-control">
+						<option value="1">Julian calendar (e.g. Middle East)</option>
+						<option value="3" selected>Gregorian calendar (universal Church)</option>
 					</select>
 				</div>
 			</div>
 			<div class="hidden">
 				<div class="form-group">
-					<select name="edmMenu" id="edmMenu" class="form-control">
-						<option value="3" selected>Western Church (Gregorian
-							Easter)</option>
+					<select name="monthMenu" id="monthMenu" class="form-control">
+						<option value="1" selected>January</option>
 					</select>
 				</div>
 			</div>
@@ -138,13 +140,22 @@ var iNext5Year = iThisYear + 5;
 		<div id="WaitMessage" class="alert-danger">
 			<h1>Please wait a second or two for the calculation ...</h1>
 		</div>
+		<h4>Easter Dating Method</h4>
+		<p>In some countries of the Middle East, the Catholic Church permits Easter and its dependent
+		movable feasts to be celebrated alongside her sister Orthodox Churches using the Julian calendar. Feasts
+		of the sanctoral cycle &mdash; fixed feasts &mdash; continue to follow the Gregorian calendar.</p>
 		<h4>iCalendar</h4>
-		<p>iCalendar (often known simply as 'iCal') is a <a href="http://tools.ietf.org/html/rfc5545">standard calendar format</a> 
+		<p>iCalendar is a <a href="http://tools.ietf.org/html/rfc5545">standard calendar format</a>
 		that enables users to create and share
-		electronic calendars and scheduling information such as events, feast days, etc. The standard is supported
+		electronic calendars and scheduling information such as events, feast days, etc. The iCalendar standard is supported
 		by most modern e-mail and calendaring software such as Microsoft Outlook, Apple iCal, Google Calendar, Evolution,
-		and Thunderbird. Providing the feasts in this format allows you to add them to your calendar on your 
-		computer or smart phone &mdash; and thus carry them with you every day.</p>
+		and Mozilla Thunderbird &mdash; as well as the standard calendaring applications on Apple iPhones and Android
+		smart phones and tablets. Providing the feasts in this format allows them to be added to calendars on a
+		computer or smart phone &mdash; and thus to carry them about every day.</p>
+		<p>For these RC calendars, the calendar scale in the iCalendar file is always set to <em>GREGORIAN</em>,
+		as the fixed feasts (or sanctoral cycle) always uses the Gregorian calendar &mdash; even if the option is chosen
+		to display Easter and its dependent feasts according to the Julian calendar.
+		</p>
 
 	</div>
 

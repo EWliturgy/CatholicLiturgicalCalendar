@@ -88,10 +88,10 @@ if($GLOBALS['iMonth'] == 1) {
 		exit;
 	}
 	
-	//Check to see whether the Year and Local Calendar combination already exists
+	//Check to see whether the Year, EDM, and Local Calendar combination already exists
 	$bGenerateCalData = False;
 	$sMonthDate = $GLOBALS['iYearSought'] . '-' . sprintf('%02d', $GLOBALS['iMonth']);
-	$sTempSQL = "select * from RCcalThisYear where (Date_this_year like '" . $sMonthDate . "%') and (ForWhichCal = '" . $GLOBALS['sCalendarChosen'] . "') order by Date_this_year asc";
+	$sTempSQL = "select * from RCcalThisYear where (Date_this_year like '" . $sMonthDate . "%') and (EDM = " . $GLOBALS['iEDM'] . ") and (ForWhichCal = '" . $GLOBALS['sCalendarChosen'] . "') order by Date_this_year asc";
 	$stmt = $GLOBALS['dbRomanCal']->prepare($sTempSQL);
 	$stmt->execute();
 	$result = $stmt->fetch();
